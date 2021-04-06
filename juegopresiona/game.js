@@ -4,22 +4,22 @@ var titulo = "TELCEL";
 var subtitulo = "Presiona Game";
 var colorbackground = "003F84";                        // Color de fondo laterales hexadecimal
 var intentos = 3;
-
+var puntosmeta = 10;
 var tiempojuego = 10; 
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
-
-var acabadeGanar = false;
 var vmin = 600;
 var vmax = 1250;
-var victorias = 0;
 
+
+
+
+var victorias = 0;
 var puntos;
-var puntosmeta = 10;
 var game;
 var tiempo;
 var savedData;
 var gameTimer = 0;   
-
+var acabadeGanar = false;
 var colorbg = "#"+colorbackground;   
 var bgColors = ["0x"+colorbackground];                         
 
@@ -69,7 +69,7 @@ preload.prototype = {
           game.load.image("paredes", "../common/sprites/wall.png");
           game.load.image("particulas", "../common/sprites/smoke.png");
           game.load.image("particula2", "../common/sprites/amarillo.png");
-          game.load.image("bg",   "../common/sprites/bg.png");
+          game.load.image("bg1",   "../common/sprites/bg.png");
           game.load.image("vida", "../common/sprites/vidas.png");
           game.load.image("atras", "../common/sprites/atras.png");
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
@@ -206,7 +206,7 @@ playGame.prototype = {
 
           var tintColor = bgColors[0];
           document.body.style.background = colorbg;
-          var tunnelBG = game.add.tileSprite(0, 0, game.width, game.height, "bg");
+          var tunnelBG = game.add.tileSprite(0, 0, game.width, game.height, "bg1");
           
           this.barrierGroup = game.add.group(); 
           this.addBarrier(this.barrierGroup, tintColor);
@@ -232,16 +232,8 @@ playGame.prototype = {
 
 
      update: function(){
-
           gameTimer = gameTimer + 1;
           this.puntosActuales.text = puntos.toString() + "/" + puntosmeta.toString();
-
-
-
-
-
-
-
           if (tiempo <= 0 && puntos < puntosmeta){
                intentos -= 1;
                this.bgMusic.stop();
@@ -252,18 +244,12 @@ playGame.prototype = {
                acabadeGanar = true;
                this.bgMusic.stop();
                game.state.start("GameOverScreen");
-
           }
-
-
      },
      updateTiempo: function(){
           tiempo -= 1;
           this.tiemporestante.text = tiempo.toString();
-
      },
-
-
      addBarrier: function(group, tintColor){              
           var barrier = new Barrier(game, game.rnd.between(vmin,vmax));
           game.add.existing(barrier);
@@ -273,8 +259,7 @@ playGame.prototype = {
 
 var gameOverScreen = function(game){};
 gameOverScreen.prototype = {
-     create: function(){  
-          
+     create: function(){    
           var lifes = intentos;
           var titleBG = game.add.tileSprite(0, 0, game.width, game.height, "backsplash");
           titleBG.tint = bgColors[0];
@@ -290,8 +275,7 @@ gameOverScreen.prototype = {
           savedData = localStorage.getItem(localStorageName)==null?{vidas:intentos, victoria: 0}:JSON.parse(localStorage.getItem(localStorageName));
           
           if (lifes >= 1){
-               if(savedData.victoria > 0){
-                   
+               if(savedData.victoria > 0){   
                     game.add.bitmapText(game.width / 2, 100 , "font", "TELCEL", 120).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", "VICTORIAS: " + savedData.victoria.toString(), 70).anchor.x = 0.5;
                     // Regresar seleccion nivel 

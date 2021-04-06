@@ -1,7 +1,15 @@
-// Settings 
-// Ajustes de juego  
-var titulo = "TELCEL";
-var subtitulo = "EsquivaGame";
+
+var titulo = ["TELCEL", 120];
+var subtitulo = ["Juego 1", 80];
+var intentostext = ["Oportunidades", 70];
+var metatext = ["Sobrevive", 80];
+var tutorial1 = ["Presiona la pantalla o da click", 60];
+var tutorial2 = ["para moverte izquierda/derecha", 55];
+var sigueintentado = ["Buen intento", 80];
+var agradece = ["Gracias por participar", 80];
+var sinintento = ["Te quedaste sin intentos =(", 60];
+var proxima = ["Mucha suerte para la proxima..", 50];
+
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
 var tiempojuego = 5; 
@@ -21,10 +29,6 @@ var gameTimer = 0;
 var colorbg = "#"+colorbackground;   
 var bgColors = ["0x"+colorbackground];
 var acabadeGanar = false;                         
-
- 
-
-
 var pathArray = window.location.pathname.split('/');
 var secondLevelLocation = pathArray[1];
 var localStorageName = secondLevelLocation + "game1";
@@ -73,7 +77,7 @@ preload.prototype = {
           game.load.image("paredes", "../common/sprites/wall.png");
           game.load.image("particulas", "../common/sprites/smoke.png");
           game.load.image("particula2", "../common/sprites/amarillo.png");
-          game.load.image("bg",   "../common/sprites/bg.png");
+          game.load.image("bg2",   "../common/sprites/bg.png");
           game.load.image("vida", "../common/sprites/vidas.png");
           game.load.image("atras", "../common/sprites/atras.png");
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
@@ -102,8 +106,8 @@ titleScreen.prototype = {
           titleBG.tint = bgColors[0];
           document.body.style.background = colorbg;
 
-          game.add.bitmapText(game.width/2,50,"font", titulo,200).anchor.x = 0.5;
-          game.add.bitmapText(game.width/2,230,"font", subtitulo,80).anchor.x = 0.5;
+          game.add.bitmapText(game.width/2,50,"font", titulo[0],titulo[1]).anchor.x = 0.5;
+          game.add.bitmapText(game.width/2,230,"font", subtitulo[0],subtitulo[1]).anchor.x = 0.5;
           
         
           victorias = savedData.victoria;
@@ -121,7 +125,7 @@ titleScreen.prototype = {
                          division = division + divisionprevia;     
                     }
                     // Regresar seleccion nivel 
-                    game.add.bitmapText(game.width / 2, game.height -400 , "font", "Intentos restantes", 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, game.height -400 , "font", intentostext[0], intentostext[1]).anchor.x = 0.5;
                     var playButton = game.add.button(game.width / 2, game.height - 150, "playbutton1", this.startGame);
                     playButton.anchor.set(0.5);
                     var tween = game.add.tween(playButton).to({
@@ -160,12 +164,12 @@ howToPlay.prototype = {
           var titleBG = game.add.tileSprite(0, 0, game.width, game.height, "backsplash");
           titleBG.tint = bgColors[0];
           document.body.style.background = colorbg;
-          game.add.bitmapText(game.width / 2, 100 , "font", "SOBREVIVE", 80).anchor.x = 0.5;
-          game.add.bitmapText(game.width/2, 200, "font", tiempojuego.toString() + " s", 80).anchor.x = 0.5;
+          game.add.bitmapText(game.width / 2, 50 , "font", metatext[0], metatext[1] ).anchor.x = 0.5;
+          game.add.bitmapText(game.width/2, 150, "font", tiempojuego.toString() + " s", 80).anchor.x = 0.5;
 
-          game.add.bitmapText(game.width / 2, 300 , "font", "Presiona la pantalla o da click", 50).anchor.x = 0.5;
-          game.add.bitmapText(game.width / 2, 350 , "font", "para moverte izquierda/derecha", 50).anchor.x = 0.5;
-          var horizontalShip = game.add.sprite(game.width / 2 - 100, 500, "player");
+          game.add.bitmapText(game.width / 2, 320 , "font", tutorial1[0], tutorial1[1]).anchor.x = 0.5;
+          game.add.bitmapText(game.width / 2, 420 , "font", tutorial2[0], tutorial2[1]).anchor.x = 0.5;
+          var horizontalShip = game.add.sprite(game.width / 2 - 100, 600, "player");
           horizontalShip.anchor.set(0.5);
           horizontalShip.scale.set(1);
           var horizontalShipTween = game.add.tween(horizontalShip).to({
@@ -198,7 +202,7 @@ playGame.prototype = {
 
           var tintColor = bgColors[0];
           document.body.style.background = colorbg;
-          var tunnelBG = game.add.tileSprite(0, 0, game.width, game.height, "bg");
+          var tunnelBG = game.add.tileSprite(0, 0, game.width, game.height, "bg2");
 
           this.cloud = game.add.image(50,game.rnd.between(100,game.height - 10),"decorafondo");
           this.cloud.anchor.set(0.5,0,5);
@@ -233,8 +237,8 @@ playGame.prototype = {
           rightWallBG.tileScale.x = -1;
 
 
-          this.tiempoText = game.add.bitmapText(game.width / 2,100,"font","Sobrevive",70).anchor.x = 0.5;
-          this.tiemporestante = game.add.bitmapText(game.width/2,180,"font",tiempojuego.toString(),120);
+          this.tiempoText = game.add.bitmapText(game.width / 2,100,"font",metatext[0],metatext[1]).anchor.x = 0.5;
+          this.tiemporestante = game.add.bitmapText(game.width/2,180,"font",tiempojuego.toString(),180);
           this.tiemporestante.anchor.x = 0.5;
 
           this.barrierGroup = game.add.group(); 
@@ -414,10 +418,10 @@ gameOverScreen.prototype = {
           if (lifes >= 1){
                if(savedData.victoria > 0){
                    
-                    game.add.bitmapText(game.width / 2, 100 , "font", "TELCEL", 120).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", "VICTORIAS: " + savedData.victoria.toString(), 70).anchor.x = 0.5;
                     // Regresar seleccion nivel 
-                    game.add.bitmapText(game.width / 2, game.height/2 + 100, "font", "Juegos disponibles", 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, game.height/2 + 100, "font", intentostext[0], intentostext[1]).anchor.x = 0.5;
                     var division = game.width/(lifes + 1); 
                     var divisionprevia = division;
                     for(var i = 0; i<lifes; i++){
@@ -452,15 +456,15 @@ gameOverScreen.prototype = {
 
                }
                else{
-                    game.add.bitmapText(game.width / 2, 100 , "font", "TELCEL", 120).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 200 , "font", "Buen intento!!", 80).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 270 , "font", sigueintentado[0], sigueintentado[1]).anchor.x = 0.5;
                     var division = game.width/(lifes + 1); 
                     var divisionprevia = division;
                     for(var i = 0; i<lifes; i++){
                          game.add.image(division, game.height/2 -100 , "vida").anchor.x = 0.5;
                          division = division + divisionprevia;
                     }
-                    game.add.bitmapText(game.width / 2, game.height -400 , "font", "Intentos restantes", 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, game.height -400 , "font", intentostext[0],intentostext[1]).anchor.x = 0.5;
                     var playButton = game.add.button(game.width / 2, game.height - 150, "playbutton1", this.startGame);
                     playButton.anchor.set(0.5);
                     var tween = game.add.tween(playButton).to({
@@ -471,10 +475,12 @@ gameOverScreen.prototype = {
                }
           }
           else if (lifes <= 0){
-               game.add.bitmapText(game.width / 2, 100 , "font", "TELCEL", 120).anchor.x = 0.5;
-               game.add.bitmapText(game.width / 2, 280 , "font", "Gracias por participar!!", 80).anchor.x = 0.5;
-               game.add.bitmapText(game.width / 2, 220 , "font", "Te quedaste sin intentos :C ", 60).anchor.x = 0.5;
-               game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", "Mucha suerte para la proxima!!!", 50).anchor.x = 0.5;
+
+
+               game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
+               game.add.bitmapText(game.width / 2, 280 , "font", agradece[0],agradece[1]).anchor.x = 0.5;
+               game.add.bitmapText(game.width / 2, 220 , "font", sinintento[0], sinintento[1]).anchor.x = 0.5;
+               game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", proxima[0], proxima[1] ).anchor.x = 0.5;
                var atrasButton = game.add.button(game.width / 2, game.height - 150, "atras", this.returnMenu);
                atrasButton.anchor.set(0.5);
                var tween = game.add.tween(atrasButton).to({
