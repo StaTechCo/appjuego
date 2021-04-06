@@ -77,11 +77,11 @@ preload.prototype = {
           game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
           game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
 
-          game.load.image("pelota", "assets/sprites/pelota.png");
-          game.load.image("freddy", "assets/sprites/freddy.png");
+          game.load.image("punto", "assets/sprites/punto.png");
+          game.load.image("evita", "assets/sprites/evita.png");
           
 
-          game.load.audio("bgmusic", ["assets/sounds/smilin and vibin.mp3"]);   
+          game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
           game.load.audio("explosion", ["assets/sounds/explosion.mp3", "assets/sounds/explosion.ogg"]);
           game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
 	},
@@ -163,7 +163,7 @@ howToPlay.prototype = {
           game.add.bitmapText(game.width / 2, 300 , "font", "Presiona Pelotas para hacer puntos!", 50).anchor.x = 0.5;
           game.add.bitmapText(game.width / 2, 350 , "font", "Evita los emojis enojados!", 50).anchor.x = 0.5;
           
-          var pelotatuto = game.add.sprite(game.width / 2 - 150, 500, "pelota");
+          var pelotatuto = game.add.sprite(game.width / 2 - 150, 500, "punto");
           pelotatuto.anchor.set(0.5);
           pelotatuto.scale.set(0.2);
           var pelotatutoTween = game.add.tween(pelotatuto).to({
@@ -171,7 +171,7 @@ howToPlay.prototype = {
           }, 500, "Linear", true, 0, -1); 
           pelotatutoTween.yoyo(true); 
 
-          var enojadotuto = game.add.sprite(game.width / 2 + 150, 500, "freddy");
+          var enojadotuto = game.add.sprite(game.width / 2 + 150, 500, "evita");
           enojadotuto.anchor.set(0.5);
           enojadotuto.scale.set(0.2);
           var enojadotutoTween = game.add.tween(enojadotuto).to({
@@ -423,7 +423,7 @@ function botonazo(){
 
 Barrier = function (game, speed) {
      position = game.rnd.between((game.width - tunnelWidth) / 2 + 50, (game.width + tunnelWidth) / 2 - 50);
-     boton = ["pelota","freddy"];
+     boton = ["punto","evita"];
      botonaleatorio = game.rnd.between(0,1);
 
 
