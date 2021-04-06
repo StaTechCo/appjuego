@@ -15,7 +15,7 @@ var victorias = 0;
 
 var repAplausos = false;
 var puntos;
-var puntosmeta = 2;
+var puntosmeta = 5;
 var game;
 var tiempo;
 var savedData;
@@ -49,7 +49,7 @@ window.onload = function() {
 var boot = function(game){};
 boot.prototype = {
   	preload: function(){
-          this.game.load.image("loading","assets/sprites/loading.png"); 
+          this.game.load.image("loading","../common/sprites/loading.png"); 
 	},
   	create: function(){
 		game.scale.pageAlignHorizontally = true;
@@ -65,23 +65,25 @@ preload.prototype = {
           var loadingBar = this.add.sprite(game.width / 2, game.height / 2, "loading");
           loadingBar.anchor.setTo(0.5);
           game.load.setPreloadSprite(loadingBar);
-          game.load.image("playbutton1", "assets/sprites/playbutton.png");
-          game.load.image("backsplash", "assets/sprites/backsplash.png");
-          game.load.image("paredes", "assets/sprites/wall.png");
-          game.load.image("particulas", "assets/sprites/smoke.png");
-          game.load.image("particula2", "assets/sprites/amarillo.png");
-          game.load.image("bg",   "assets/sprites/bg.png");
-          game.load.image("vida", "assets/sprites/vidas.png");
-          game.load.image("atras", "assets/sprites/atras.png");
+          game.load.image("playbutton1", "../common/sprites/playbutton.png");
+          game.load.image("backsplash", "../common/sprites/backsplash.png");
+          game.load.image("paredes", "../common/sprites/wall.png");
+          game.load.image("particulas", "../common/sprites/smoke.png");
+          game.load.image("particula2", "../common/sprites/amarillo.png");
+          game.load.image("bg",   "../common/sprites/bg.png");
+          game.load.image("vida", "../common/sprites/vidas.png");
+          game.load.image("atras", "../common/sprites/atras.png");
+          game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
+          game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
+          game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
+          game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
+
           game.load.image("pelota", "assets/sprites/pelota.png");
           game.load.image("freddy", "assets/sprites/freddy.png");
-          game.load.bitmapFont("font", "assets/fonts/font_0.png", "assets/fonts/font.fnt");
-          game.load.bitmapFont("font2", "assets/fonts/font2.png", "assets/fonts/font2.fnt");
-          game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
+          
+
+          game.load.audio("bgmusic", ["assets/sounds/smilin and vibin.mp3"]);   
           game.load.audio("explosion", ["assets/sounds/explosion.mp3", "assets/sounds/explosion.ogg"]);
-          game.load.audio("cuete1", ["assets/sounds/Cuete1.mp3"]);
-          game.load.audio("cuete2", ["assets/sounds/Cuete2.mp3"]);
-          game.load.audio("aplausos", ["assets/sounds/aplausos.mp3"]);
           game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
 	},
   	create: function(){

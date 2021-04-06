@@ -4,7 +4,7 @@ var titulo = "TELCEL";
 var subtitulo = "EsquivaGame";
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
-var tiempojuego = 4; 
+var tiempojuego = 60; 
 var tunnelWidth = 400;                                 // Ancho del tunel de juego
 var shipHorizontalSpeed = 100;                         // Velocidad jugador de manera horizontal, mientras mas grande valor mas lento 
 var shipMoveDelay = 0;                                 // Retardo para volver a mover al jugador 
@@ -47,7 +47,7 @@ window.onload = function() {
 var boot = function(game){};
 boot.prototype = {
   	preload: function(){
-          this.game.load.image("loading","assets/sprites/loading.png"); 
+          this.game.load.image("loading","../common/sprites/loading.png"); 
 	},
   	create: function(){
 		game.scale.pageAlignHorizontally = true;
@@ -63,22 +63,27 @@ preload.prototype = {
           var loadingBar = this.add.sprite(game.width / 2, game.height / 2, "loading");
           loadingBar.anchor.setTo(0.5);
           game.load.setPreloadSprite(loadingBar);
-          game.load.image("playbutton1", "assets/sprites/playbutton.png");
-          game.load.image("backsplash", "assets/sprites/backsplash.png");
-          game.load.image("paredes", "assets/sprites/wall.png");
-          game.load.image("particulas", "assets/sprites/smoke.png");
-          game.load.image("particula2", "assets/sprites/amarillo.png");
-          game.load.image("separator", "assets/sprites/separator1.png");
-          game.load.image("bg",   "assets/sprites/bg.png");
+          
+          // Objetos comunes 
+          game.load.image("playbutton1", "../common/sprites/playbutton.png");
+          game.load.image("backsplash", "../common/sprites/backsplash.png");
+          game.load.image("paredes", "../common/sprites/wall.png");
+          game.load.image("particulas", "../common/sprites/smoke.png");
+          game.load.image("particula2", "../common/sprites/amarillo.png");
+          game.load.image("bg",   "../common/sprites/bg.png");
+          game.load.image("vida", "../common/sprites/vidas.png");
+          game.load.image("atras", "../common/sprites/atras.png");
+          game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
+          game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
+          game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
+          game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
+
+          // Objetos personalizados de juego
           game.load.image("player", "assets/sprites/player.png");
           game.load.image("decorafondo", "assets/sprites/objetofondo.png");
           game.load.image("obstaculo", "assets/sprites/obstaculo.png");
-          game.load.image("vida", "assets/sprites/vidas.png");
-          game.load.image("atras", "assets/sprites/atras.png");
-          game.load.bitmapFont("font", "assets/fonts/font_0.png", "assets/fonts/font.fnt");
-          game.load.bitmapFont("font2", "assets/fonts/font2.png", "assets/fonts/font2.fnt");
           game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
-          game.load.audio("explosion", ["assets/sounds/explosion.mp3", "assets/sounds/explosion.ogg"]);
+
 	},
   	create: function(){
 		this.game.state.start("TitleScreen");
@@ -346,17 +351,7 @@ playGame.prototype = {
                          }, 1000, Phaser.Easing.Linear.None, true);
                          destroyTween.onComplete.add(function(){
                               this.bgMusic.stop();
-                              /*
-                              var explosionSound = game.add.audio("explosion");
-                              explosionSound.play();
-                              var explosionEmitter = game.add.emitter(this.ship.x, this.ship.y, 200);
-                              explosionEmitter.makeParticles("smoke");
-                              explosionEmitter.setAlpha(0.5, 1);
-                              explosionEmitter.minParticleScale = 0.5;
-                              explosionEmitter.maxParticleScale = 2;
-                              explosionEmitter.start(true, 2000, null, 200);
 
-                              */
                               this.ship.destroy();
                               game.time.events.add(Phaser.Timer.SECOND * 0.01, function(){
                                    barrierSpeed = this.saveBarrierSpeed;
