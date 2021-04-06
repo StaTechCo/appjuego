@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 22-03-2021 a las 10:20:19
--- Versión del servidor: 5.7.33
--- Versión de PHP: 7.3.26
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-04-2021 a las 22:39:55
+-- Versión del servidor: 10.4.18-MariaDB
+-- Versión de PHP: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,8 +18,58 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `zende_db`
+-- Base de datos: `appgames`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estados`
+--
+
+CREATE TABLE `estados` (
+  `idEstado` bigint(20) UNSIGNED NOT NULL,
+  `idPais` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`idEstado`, `idPais`, `nombre`) VALUES
+(1, 146, 'Aguascalientes'),
+(2, 146, 'Baja California'),
+(3, 146, 'Baja California Sur'),
+(4, 146, 'Campeche'),
+(5, 146, 'Coahuila de Zaragoza'),
+(6, 146, 'Colima'),
+(7, 146, 'Chiapas'),
+(8, 146, 'Chihuahua'),
+(9, 146, 'Ciudad de México'),
+(10, 146, 'Durango'),
+(11, 146, 'Guanajuato'),
+(12, 146, 'Guerrero'),
+(13, 146, 'Hidalgo'),
+(14, 146, 'Jalisco'),
+(15, 146, 'México'),
+(16, 146, 'Michoacán de Ocampo'),
+(17, 146, 'Morelos'),
+(18, 146, 'Nayarit'),
+(19, 146, 'Nuevo León'),
+(20, 146, 'Oaxaca'),
+(21, 146, 'Puebla'),
+(22, 146, 'Querétaro'),
+(23, 146, 'Quintana Roo'),
+(24, 146, 'San Luis Potosí'),
+(25, 146, 'Sinaloa'),
+(26, 146, 'Sonora'),
+(27, 146, 'Tabasco'),
+(28, 146, 'Tamaulipas'),
+(29, 146, 'Tlaxcala'),
+(30, 146, 'Veracruz de Ignacio de la Llave'),
+(31, 146, 'Yucatán'),
+(32, 146, 'Zacatecas');
 
 -- --------------------------------------------------------
 
@@ -2360,9 +2409,35 @@ INSERT INTO `municipios` (`idMunicipio`, `idEstado`, `nombre`) VALUES
 (2462, 32, 'Trancoso'),
 (2463, 32, 'Santa María de la Paz');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registrosjuegos`
+--
+
+CREATE TABLE `registrosjuegos` (
+  `idregistro` tinyint(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefono` bigint(10) NOT NULL,
+  `idmunicipio` int(5) NOT NULL,
+  `idestado` int(5) NOT NULL,
+  `dtime` datetime(6) NOT NULL,
+  `marca` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `registrosjuegos`
+--
+
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `estados`
+--
+ALTER TABLE `estados`
+  ADD PRIMARY KEY (`idEstado`);
 
 --
 -- Indices de la tabla `municipios`
@@ -2371,14 +2446,32 @@ ALTER TABLE `municipios`
   ADD PRIMARY KEY (`idMunicipio`);
 
 --
+-- Indices de la tabla `registrosjuegos`
+--
+ALTER TABLE `registrosjuegos`
+  ADD PRIMARY KEY (`idregistro`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `estados`
+--
+ALTER TABLE `estados`
+  MODIFY `idEstado` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
 --
 ALTER TABLE `municipios`
   MODIFY `idMunicipio` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2464;
+
+--
+-- AUTO_INCREMENT de la tabla `registrosjuegos`
+--
+ALTER TABLE `registrosjuegos`
+  MODIFY `idregistro` tinyint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
