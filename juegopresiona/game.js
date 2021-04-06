@@ -13,9 +13,8 @@ var vmin = 500;
 var vmax = 1250;
 var victorias = 0;
 
-var repAplausos = false;
 var puntos;
-var puntosmeta = 5;
+var puntosmeta = 10;
 var game;
 var tiempo;
 var savedData;
@@ -198,8 +197,8 @@ var playGame = function(game){};
 playGame.prototype = {  
      create: function(){
 
-//          this.bgMusic = game.add.audio("bgmusic");
-//          this.bgMusic.loopFull(1);
+          this.bgMusic = game.add.audio("bgmusic");
+          this.bgMusic.loopFull(1);
 
           tiempo = tiempojuego;
           puntos = 0;
@@ -245,12 +244,13 @@ playGame.prototype = {
 
           if (tiempo <= 0 && puntos < puntosmeta){
                intentos -= 1;
-  //             this.bgMusic.stop();
+               this.bgMusic.stop();
                game.state.start("GameOverScreen");
           }
           if ( puntos >= puntosmeta){
                victorias+=1;
                acabadeGanar = true;
+               this.bgMusic.stop();
                game.state.start("GameOverScreen");
 
           }
@@ -324,14 +324,9 @@ gameOverScreen.prototype = {
                     // AQUI ACABAMOS DE GANAR ------------------------------------------------------------------------
 
                     if (acabadeGanar == true) {
-                         
-                         repAplausos = true;
                          aplausos.play();
-
-
                          this.fuegosArtificiales();
                          game.time.events.loop(1000, this.fuegosArtificiales, this);
-
                     }
                     
                     
