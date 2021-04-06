@@ -23,8 +23,10 @@ var bgColors = ["0x"+colorbackground];
 
  
 
-var friendlyBarRatio = 10;
-var localStorageName = "telceljuego";
+
+var pathArray = window.location.pathname.split('/');
+var secondLevelLocation = pathArray[1];
+var localStorageName = secondLevelLocation + "game1";
 
 
 window.onload = function() {
@@ -488,14 +490,7 @@ Barrier = function (game, speed, tintColor) {
      this.crop(cropRect);
 	game.physics.enable(this, Phaser.Physics.ARCADE);
      this.anchor.set(position, 0.5);
-     //this.levelTint = tintColor;
-     if(game.rnd.between(0, friendlyBarRatio)!=0){
-          //this.tint = tintColor;
-          this.friendly = false;
-     }     
-     else{
-          this.friendly = false;
-     }
+ 
      this.body.immovable = true;
      this.body.velocity.y = speed;
      this.placeBarrier = true;

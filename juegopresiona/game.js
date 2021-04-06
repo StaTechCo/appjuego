@@ -24,9 +24,9 @@ var gameTimer = 0;
 var colorbg = "#"+colorbackground;   
 var bgColors = ["0x"+colorbackground];                         
 
- 
-
-var localStorageName = "telcelpresiona";
+var pathArray = window.location.pathname.split('/');
+var secondLevelLocation = pathArray[1];
+var localStorageName = secondLevelLocation + "game2";
 
 
 window.onload = function() {
