@@ -1,0 +1,17 @@
+/* Estilos de página para llenar datos usuario */ 
+* {
+    box-sizing: border-box;
+  }
+.img-fluid {
+    max-height: 100%;
+}
+.formulario {
+    left      : 50%;
+    top       : 40%;
+    position  : absolute;
+    transform : translate(-50%, -50%);
+    z-index: 2;
+    background: rgba(0,102,155,0);
+}
+
+  

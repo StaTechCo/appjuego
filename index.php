@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Ingresa nombre empresa </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css"/> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+ 
+<div class="formulario">
+    <div class="card-body">
+        <img src="img/logotelcel.png" class="img-fluid" style="height: auto;">
+        <form name="registrar" id="registrar"> 
+          <div class="form-group">
+            <label for="email"><b> Correo electronico </b></label>
+            <input  type="email" class="form-control" id="email" name="email"  placeholder="Ingresar correo">
+          </div>
+          <div class="form-group">
+            <label for="cellphone"><b>Celular </b></label>
+            <input  type="text" class="form-control" id="cellphone" name="cellphone"  placeholder="Ingresar celular">
+          </div>
+          <div class="form-group row  my-2">
+            <div class="col-12"> 
+            <label for="estado"> <b> Estado </b></label>
+              <select   name="estado" id="estado" class="form-control"  title="Selecciona estado" data-allow-clear="true" > 
+              </select>
+            </div> 
+          </div>
+          <div class="form-group row my-2">
+            <div class="col-12"> 
+            <label for="municipio"> <b> Municipio </b></label>
+              <select  name="municipio" id="municipio" class="form-control" title="Selecciona municipio" data-allow-clear="true" > 
+              <option value="-1" selected> Selecciona municipio </option>
+              </select>
+            </div> 
+          </div>
+          <div class="row w-100 justify-content-center"> 
+              <input type="submit" class="btn btn-success" value="JUGAR">
+          </div>
+        </form> 
+    </div>
+</div>
+ 
+ 
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="https://unpkg.com/sweetalert2@10.15.7/dist/sweetalert2.all.js"> </script>
+  <script src="includes/index.js"></script>
+  <script> 
+         $("#estado").select2({
+              width: '100%',
+              theme: 'classic'// need to override the changed default
+        });
+        $("#municipio").select2({
+              width: '100%',
+              theme: 'classic' // need to override the changed default.
+        });
+  </script>
+</body>
+</html>
+
