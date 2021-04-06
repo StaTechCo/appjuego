@@ -4,7 +4,7 @@ var titulo = "TELCEL";
 var subtitulo = "EsquivaGame";
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
-var tiempojuego = 60; 
+var tiempojuego = 5; 
 var tunnelWidth = 400;                                 // Ancho del tunel de juego
 var shipHorizontalSpeed = 100;                         // Velocidad jugador de manera horizontal, mientras mas grande valor mas lento 
 var shipMoveDelay = 0;                                 // Retardo para volver a mover al jugador 
@@ -19,7 +19,8 @@ var tiempo;
 var savedData;
 var gameTimer = 0;   
 var colorbg = "#"+colorbackground;   
-var bgColors = ["0x"+colorbackground];                         
+var bgColors = ["0x"+colorbackground];
+var acabadeGanar = false;                         
 
  
 
@@ -377,6 +378,7 @@ playGame.prototype = {
           tiempo -= 1;
           this.tiemporestante.text = tiempo.toString();
           if (tiempo <= 0){
+               acabadeGanar = true;
                victorias+=1;
           }
      },
@@ -398,7 +400,7 @@ gameOverScreen.prototype = {
           titleBG.tint = bgColors[0];
           document.body.style.background = colorbg;
 
-          
+          var aplausos = game.add.audio("aplausos");
          
 
          
@@ -439,6 +441,15 @@ gameOverScreen.prototype = {
                          height:90
                     }, 1500, "Linear", true, 0, -1); 
                     tween.yoyo(true);
+
+                    
+                    if (acabadeGanar == true) {
+                         aplausos.play();
+                         this.fuegosArtificiales();
+                         game.time.events.loop(1000, this.fuegosArtificiales, this);
+                    }
+
+
                }
                else{
                     game.add.bitmapText(game.width / 2, 100 , "font", "TELCEL", 120).anchor.x = 0.5;
@@ -475,10 +486,36 @@ gameOverScreen.prototype = {
      },
 
      startGame: function(){
-          game.state.start("HowToPlay");     
+          game.sound.stopAll();          
+          game.state.start("HowToPlay"); 
+          acabadeGanar = false;    
      },
      returnMenu: function(){
+          game.sound.stopAll();
           window.location.href = '../menu';
+     },
+     fuegosArtificiales: function(){
+
+          var explosionesvec = ["particulas", "particula2"];
+
+          var sonidoCuete = ["cuete1", "cuete2"];
+
+          var explosionSound = game.add.audio(sonidoCuete[game.rnd.between(0,sonidoCuete.length-1)]);
+          explosionSound.play();
+          
+
+          var explosionEmitter = game.add.emitter(game.rnd.between(200, game.width ), game.rnd.between (200, game.height-100), 100);
+          explosionEmitter.makeParticles(explosionesvec[game.rnd.between(0,explosionesvec.length-1)]);
+          explosionEmitter.setAlpha(0.5, 1);
+          explosionEmitter.setXSpeed(400, -400);
+          explosionEmitter.setYSpeed(500, -500);
+
+          explosionEmitter.setRotation(180, 40);
+          explosionEmitter.setScale(2, 0.5, 2, 0.5, 3200, Phaser.Easing.None);
+
+          explosionEmitter.start(true, 3200, null, 100);
+
+
      }    
 }
 

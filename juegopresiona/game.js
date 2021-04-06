@@ -9,7 +9,7 @@ var tiempojuego = 10;
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
 
 var acabadeGanar = false;
-var vmin = 500;
+var vmin = 600;
 var vmax = 1250;
 var victorias = 0;
 
@@ -398,7 +398,7 @@ gameOverScreen.prototype = {
           explosionEmitter.setScale(2, 0.5, 2, 0.5, 3200, Phaser.Easing.None);
 
           explosionEmitter.start(true, 3200, null, 100);
-          console.log(explosionesvec.length);
+
 
 
      }
