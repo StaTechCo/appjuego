@@ -9,7 +9,6 @@ var sigueintentado = ["Buen intento", 80];
 var agradece = ["Gracias por participar", 80];
 var sinintento = ["Te quedaste sin intentos =(", 60];
 var proxima = ["Mucha suerte para la proxima..", 50];
-
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
 var tiempojuego = 5; 
@@ -20,6 +19,7 @@ var barrierSpeed = 550;                                // Velocidad inicial de o
 var barrierGap = 370;                                  // Distancia entre obstaculos 
 var barrierIncreaseSpeed = 1.1;                        // Incremento de velocidad  obstaculos
 var velocitybg = [1.5, 0.75, 1.25, 1.5];               // Velocidad decoracion de fondo  VALOR MAXIMO 2
+
 
 var victorias = 0;
 var game;
