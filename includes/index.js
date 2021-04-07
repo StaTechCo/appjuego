@@ -5,8 +5,13 @@ $(document).ready(function(){
   var localStorageName = secondLevelLocation;
 
   localStorage.setItem(localStorageName,JSON.stringify({
-    registro: false
+    registro: false, 
+    vidas: 0,
+    victoria: false
   }));
+
+
+  
 
 
   // Carga estados
@@ -70,7 +75,9 @@ $( "#registrar" ).submit(function(event) {
                 } 
                  if(datos.status === 'success') {
                   localStorage.setItem(localStorageName,JSON.stringify({
-                    registro: true
+                    registro: true,
+                    vidas: 3,
+                    victoria: false
                   }));
                     window.location.href = 'menu'
                 } 

@@ -23,18 +23,28 @@ var vmax = 1250;                                       // Velocidad maxima de ob
 
 
 
-var victorias = 0;
+var victorias = false;
 var puntos;
 var game;
 var tiempo;
 var savedData;
 var gameTimer = 0;   
-var acabadeGanar = false;
 var colorbg = "#"+colorbackground;   
 var bgColors = ["0x"+colorbackground];                         
 var pathArray = window.location.pathname.split('/');
 var secondLevelLocation = pathArray[1];
-var localStorageName = secondLevelLocation + "game2";
+var localStorageName = secondLevelLocation;
+
+
+savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName)); 
+victorias = savedData.victoria;
+intentos = savedData.vidas;
+if (savedData.victoria || savedData.vidas == 0){
+
+          window.location.href = '/'+ secondLevelLocation;
+      
+      
+}
 
 
 window.onload = function() {
@@ -102,7 +112,7 @@ preload.prototype = {
 var titleScreen = function(game){};
 titleScreen.prototype = {  
      create: function(){  
-          savedData = localStorage.getItem(localStorageName)==null?{vidas:intentos, victoria:0}:JSON.parse(localStorage.getItem(localStorageName)); 
+          savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName)); 
           
           var titleBG = game.add.tileSprite(0, 0, game.width, game.height, "backsplash");
           titleBG.tint = bgColors[0];
@@ -115,7 +125,7 @@ titleScreen.prototype = {
           intentos = savedData.vidas;
 
           if (savedData.vidas >= 1){    
-               if(savedData.victoria > 0){
+               if(savedData.victoria){
                     game.state.start("GameOverScreen");
                } 
                else{
@@ -210,7 +220,7 @@ playGame.prototype = {
 
           tiempo = tiempojuego;
           puntos = 0;
-          savedData = localStorage.getItem(localStorageName)==null?{vidas:intentos, victoria: 0}:JSON.parse(localStorage.getItem(localStorageName));
+          savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
 
           var tintColor = bgColors[0];
           document.body.style.background = colorbg;
@@ -248,8 +258,7 @@ playGame.prototype = {
                game.state.start("GameOverScreen");
           }
           if ( puntos >= puntosmeta){
-               victorias+=1;
-               acabadeGanar = true;
+               victorias=true;
                this.bgMusic.stop();
                game.state.start("GameOverScreen");
           }
@@ -280,48 +289,24 @@ gameOverScreen.prototype = {
                victoria: victorias
      	}));
 
-          savedData = localStorage.getItem(localStorageName)==null?{vidas:intentos, victoria: 0}:JSON.parse(localStorage.getItem(localStorageName));
+          savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
           
           if (lifes >= 1){
-               if(savedData.victoria > 0){   
+               if(savedData.victoria){   
+
+
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 220 , "font", "VICTORIAS: " + savedData.victoria.toString(), 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
                     // Regresar seleccion nivel 
-                    game.add.bitmapText(game.width / 2, game.height/2 + 100, "font", intentostext[0], intentostext[1]).anchor.x = 0.5;
-                    var division = game.width/(lifes + 1); 
-                    var divisionprevia = division;
-                    for(var i = 0; i<lifes; i++){
-                         game.add.image(division, game.height/2 -100 , "vida").anchor.x = 0.5;
-                         division = division + divisionprevia;
-                    }
-                    var playButton = game.add.button(game.width / 2, game.height - 150, "playbutton1", this.startGame);
-                    playButton.anchor.set(0.5);
-                    var tween = game.add.tween(playButton).to({
-                         width: 220,
-                         height:220
-                    }, 1500, "Linear", true, 0, -1); 
-                    tween.yoyo(true);
 
-                    var atrasButton = game.add.button(100, game.height -100, "atras", this.returnMenu);
-                    atrasButton.width = "100";
-                    atrasButton.height = "100";
-                    atrasButton.anchor.set(0.5);
-                    var tween = game.add.tween(atrasButton).to({
-                         width: 90,
-                         height:90
-                    }, 1500, "Linear", true, 0, -1); 
-                    tween.yoyo(true);
-
-
-                    // AQUI ACABAMOS DE GANAR ------------------------------------------------------------------------
-
-                    if (acabadeGanar == true) {
-                         aplausos.play();
-                         this.fuegosArtificiales();
-                         game.time.events.loop(1000, this.fuegosArtificiales, this);
-                    }
                     
-                    
+                    aplausos.play();
+                    this.fuegosArtificiales();
+                    game.time.events.loop(1000, this.fuegosArtificiales, this);
+
+                   
                }
                else{
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
@@ -340,6 +325,16 @@ gameOverScreen.prototype = {
                     height:220
                     }, 1500, "Linear", true, 0, -1); 
                     tween.yoyo(true);
+
+                    var atrasButton = game.add.button(100, game.height -100, "atras", this.returnMenu);
+                    atrasButton.width = "100";
+                    atrasButton.height = "100";
+                    atrasButton.anchor.set(0.5);
+                    var tween = game.add.tween(atrasButton).to({
+                         width: 90,
+                         height:90
+                    }, 1500, "Linear", true, 0, -1); 
+                    tween.yoyo(true);
                }
           }
           else if (lifes <= 0){
@@ -347,13 +342,7 @@ gameOverScreen.prototype = {
                game.add.bitmapText(game.width / 2, 280 , "font", agradece[0], agradece[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 220 , "font", sinintento[0], sinintento[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", proxima[0], proxima[1]).anchor.x = 0.5;
-               var atrasButton = game.add.button(game.width / 2, game.height - 150, "atras", this.returnMenu);
-               atrasButton.anchor.set(0.5);
-               var tween = game.add.tween(atrasButton).to({
-                    width: 220,
-                    height:220
-               }, 1500, "Linear", true, 0, -1); 
-               tween.yoyo(true);
+
           }
      },
 
