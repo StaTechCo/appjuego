@@ -11,7 +11,7 @@ var sinintento = ["Te quedaste sin intentos =(", 60];
 var proxima = ["Mucha suerte para la proxima..", 50];
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
-var tiempojuego = 5; 
+var tiempojuego = 2; 
 var tunnelWidth = 400;                                 // Ancho del tunel de juego
 var shipHorizontalSpeed = 100;                         // Velocidad jugador de manera horizontal, mientras mas grande valor mas lento 
 var shipMoveDelay = 0;                                 // Retardo para volver a mover al jugador 
@@ -89,7 +89,10 @@ preload.prototype = {
           game.load.image("bg2",   "../common/sprites/bg.png");
           game.load.image("vida", "../common/sprites/vidas.png");
           game.load.image("atras", "../common/sprites/atras.png");
+          game.load.image("trofeo", "../common/sprites/trofeo.png");
+          
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
+          
           game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
           game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
           game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
@@ -409,6 +412,23 @@ gameOverScreen.prototype = {
                     game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
+
+                    var trofeo = game.add.image(game.width /2, game.height /2 + 150, "trofeo");
+                    trofeo.anchor.set(0.5);
+                    trofeo.angle = (-3);
+
+                    var giraTween = game.add.tween(trofeo).to({
+                         angle: 3
+                    }, 2000, "Linear", true, 0, -1); 
+                    giraTween.yoyo(true);
+                    
+                    var tween = game.add.tween(trofeo).to({
+                         width: 250,
+                         height:300
+                    }, 2500, "Linear", true, 0, -1); 
+                    tween.yoyo(true);
+
+
                     var aplausos = game.add.audio("aplausos");
                     aplausos.play();
                     this.fuegosArtificiales();

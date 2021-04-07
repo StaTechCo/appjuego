@@ -82,6 +82,8 @@ preload.prototype = {
           var loadingBar = this.add.sprite(game.width / 2, game.height / 2, "loading");
           loadingBar.anchor.setTo(0.5);
           game.load.setPreloadSprite(loadingBar);
+
+          // Objetos comunes 
           game.load.image("playbutton1", "../common/sprites/playbutton.png");
           game.load.image("backsplash", "../common/sprites/backsplash.png");
           game.load.image("paredes", "../common/sprites/wall.png");
@@ -90,15 +92,19 @@ preload.prototype = {
           game.load.image("bg1",   "../common/sprites/bg.png");
           game.load.image("vida", "../common/sprites/vidas.png");
           game.load.image("atras", "../common/sprites/atras.png");
+          game.load.image("trofeo", "../common/sprites/trofeo.png");
+          
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
+          
           game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
           game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
           game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
-
+          
+          
+          // Objetos personalizados de juego
           game.load.image("punto", "assets/sprites/punto.png");
           game.load.image("evita", "assets/sprites/evita.png");
           
-
           game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
           game.load.audio("explosion", ["assets/sounds/explosion.mp3", "assets/sounds/explosion.ogg"]);
           game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
@@ -281,7 +287,22 @@ gameOverScreen.prototype = {
                     game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
-                    // Regresar seleccion nivel 
+
+                    var trofeo = game.add.image(game.width /2, game.height /2 + 150, "trofeo");
+                    trofeo.anchor.set(0.5);
+                    trofeo.angle = (-3);
+
+                    var giraTween = game.add.tween(trofeo).to({
+                         angle: 3
+                    }, 2000, "Linear", true, 0, -1); 
+                    giraTween.yoyo(true);
+                    
+                    var tween = game.add.tween(trofeo).to({
+                         width: 250,
+                         height:300
+                    }, 2500, "Linear", true, 0, -1); 
+                    tween.yoyo(true);
+
 
                     
                     aplausos.play();
