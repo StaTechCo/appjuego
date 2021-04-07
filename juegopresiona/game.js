@@ -393,7 +393,7 @@ Barrier = function (game, speed) {
      this.tipoboton = botonaleatorio;
 
      this.anchor.set(0.5);
-     this.width = game.rnd.between(100,200);
+     this.width = game.rnd.between(150,300);
      this.height = this.width;
      this.body.immovable = true;
      this.body.velocity.y = speed;
