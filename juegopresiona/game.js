@@ -38,7 +38,7 @@ var localStorageName = secondLevelLocation;
 
 savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName)); 
 
-if (savedData.victoria || savedData.vidas == 0){
+if (savedData.victoria || savedData.vidas == 0 || savedData.registro == false){
 
           window.location.href = '/'+ secondLevelLocation;
       
