@@ -37,8 +37,7 @@ var localStorageName = secondLevelLocation;
 
 
 savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName)); 
-victorias = savedData.victoria;
-intentos = savedData.vidas;
+
 if (savedData.victoria || savedData.vidas == 0){
 
           window.location.href = '/'+ secondLevelLocation;
@@ -121,14 +120,7 @@ titleScreen.prototype = {
           game.add.bitmapText(game.width/2,50,"font", titulo[0],titulo[1]).anchor.x = 0.5;
           game.add.bitmapText(game.width/2,230,"font", subtitulo[0],subtitulo[1]).anchor.x = 0.5;
           
-          victorias = savedData.victoria;
           intentos = savedData.vidas;
-
-          if (savedData.vidas >= 1){    
-               if(savedData.victoria){
-                    game.state.start("GameOverScreen");
-               } 
-               else{
                     var division = game.width/(savedData.vidas + 1); 
                     var divisionprevia = division;
                     for(var i = 0; i<savedData.vidas; i++){
@@ -154,11 +146,6 @@ titleScreen.prototype = {
                          height:90
                     }, 1500, "Linear", true, 0, -1); 
                     tween.yoyo(true);
-               }   
-          }
-          else if (savedData.vidas <= 0) {
-              game.state.start("GameOverScreen");
-          }
 
      },
      startGame: function(){          
@@ -245,10 +232,6 @@ playGame.prototype = {
           game.time.events.loop(1000, this.updateTiempo,  this);
           
      },
-
-
-
-
      update: function(){
           gameTimer = gameTimer + 1;
           this.puntosActuales.text = puntos.toString() + "/" + puntosmeta.toString();
@@ -348,14 +331,10 @@ gameOverScreen.prototype = {
 
      startGame: function(){
           game.sound.stopAll();          
-
           game.state.start("HowToPlay");
-
-          acabadeGanar = false;
      },
      returnMenu: function(){
           game.sound.stopAll();
-
           window.location.href = '../menu';
      },
      
@@ -414,7 +393,6 @@ Barrier = function (game, speed) {
      this.tipoboton = botonaleatorio;
 
      this.anchor.set(0.5);
-     //this.levelTint = tintColor;
      this.width = game.rnd.between(100,200);
      this.height = this.width;
      this.body.immovable = true;
