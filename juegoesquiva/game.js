@@ -198,7 +198,8 @@ playGame.prototype = {
 
           var tintColor = bgColors[0];
           document.body.style.background = colorbg;
-          game.add.tileSprite(0, 0, game.width, game.height, "bg2");
+          var fondo = game.add.image(0, 0, "bg2");
+          fondo.height = game.height;
 
           this.cloud = game.add.image(50,game.rnd.between(100,game.height - 10),"decorafondo");
           this.cloud.anchor.set(0.5,0,5);

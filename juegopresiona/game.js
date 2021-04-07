@@ -170,7 +170,6 @@ howToPlay.prototype = {
           
           var pelotatuto = game.add.sprite(game.width / 2 - 150, 500, "punto");
           pelotatuto.anchor.set(0.5);
-          pelotatuto.scale.set(0.2);
           var pelotatutoTween = game.add.tween(pelotatuto).to({
                y: game.height / 2 + 100
           }, 500, "Linear", true, 0, -1); 
@@ -178,7 +177,6 @@ howToPlay.prototype = {
 
           var enojadotuto = game.add.sprite(game.width / 2 + 150, 500, "evita");
           enojadotuto.anchor.set(0.5);
-          enojadotuto.scale.set(0.2);
           var enojadotutoTween = game.add.tween(enojadotuto).to({
                y: game.height / 2 + 100
           }, 500, "Linear", true, 0, -1); 
@@ -211,7 +209,8 @@ playGame.prototype = {
 
           var tintColor = bgColors[0];
           document.body.style.background = colorbg;
-          var tunnelBG = game.add.tileSprite(0, 0, game.width, game.height, "bg1");
+          var fondo = game.add.image(0, 0, "bg1");
+          fondo.height = game.height;
           
           this.barrierGroup = game.add.group(); 
           this.addBarrier(this.barrierGroup, tintColor);

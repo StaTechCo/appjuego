@@ -4,6 +4,8 @@ $(document).ready(function(){
   var secondLevelLocation = pathArray[1];
   var localStorageName = secondLevelLocation;
 
+  var vidastotales = 5;
+
   localStorage.setItem(localStorageName,JSON.stringify({
     registro: false, 
     vidas: 0,
@@ -76,7 +78,7 @@ $( "#registrar" ).submit(function(event) {
                  if(datos.status === 'success') {
                   localStorage.setItem(localStorageName,JSON.stringify({
                     registro: true,
-                    vidas: 3,
+                    vidas: vidastotales,
                     victoria: false
                   }));
                     window.location.href = 'menu'
