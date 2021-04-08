@@ -93,7 +93,6 @@ preload.prototype = {
           
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
           
-          game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
           game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
           game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
 
@@ -101,7 +100,7 @@ preload.prototype = {
           game.load.image("player", "assets/sprites/player.png");
           game.load.image("decorafondo", "assets/sprites/objetofondo.png");
           game.load.image("obstaculo", "assets/sprites/obstaculo.png");
-          game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
+          game.load.audio("bgmusic", ["assets/sounds/BackgroundM.mp3"]);   
 
 	},
   	create: function(){
@@ -486,7 +485,7 @@ gameOverScreen.prototype = {
 
           var explosionesvec = ["particulas", "particula2"];
 
-          var sonidoCuete = ["cuete1", "cuete2"];
+          var sonidoCuete = ["cuete2"];
 
           var explosionSound = game.add.audio(sonidoCuete[game.rnd.between(0,sonidoCuete.length-1)]);
           explosionSound.play();

@@ -96,7 +96,6 @@ preload.prototype = {
           
           game.load.bitmapFont("font", "../common/fonts/font_0.png", "../common/fonts/font.fnt");
           
-          game.load.audio("cuete1", ["../common/sounds/Cuete1.mp3"]);
           game.load.audio("cuete2", ["../common/sounds/Cuete2.mp3"]);
           game.load.audio("aplausos", ["../common/sounds/aplausos.mp3"]);
           
@@ -104,9 +103,9 @@ preload.prototype = {
           // Objetos personalizados de juego
           game.load.image("punto", "assets/sprites/punto.png");
           game.load.image("evita", "assets/sprites/evita.png");
-          
+
           game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
-          game.load.audio("explosion", ["assets/sounds/explosion.mp3", "assets/sounds/explosion.ogg"]);
+          game.load.audio("explosion", ["assets/sounds/explosion.mp3"]);
           game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
 	},
   	create: function(){
@@ -362,7 +361,7 @@ gameOverScreen.prototype = {
 
           var explosionesvec = ["particulas", "particula2"];
 
-          var sonidoCuete = ["cuete1", "cuete2"];
+          var sonidoCuete = ["cuete2"];
 
           var explosionSound = game.add.audio(sonidoCuete[game.rnd.between(0,sonidoCuete.length-1)]);
           explosionSound.play();
