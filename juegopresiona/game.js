@@ -14,8 +14,8 @@ var proxima = ["Mucha suerte para la proxima..", 50];
 
 var colorbackground = "003F84";                        // Color de fondo laterales hexadecimal
 var intentos = 3;                                      // Cantidad de intentos
-var puntosmeta = 10;                                   // Puntos a conseguir 
-var tiempojuego = 10;                                  // Tiempo de juego
+var puntosmeta = 30;                                   // Puntos a conseguir 
+var tiempojuego = 40;                                  // Tiempo de juego
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
 var vmin = 600;                                        // Velocidad minima de obstaculo   
 var vmax = 1250;                                       // Velocidad maxima de obstaculo
@@ -285,8 +285,8 @@ gameOverScreen.prototype = {
 
 
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -20, 220 , "font", "¡FELICIDADES!" , 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -10, 300 , "font", "¡Solicita tu premio! " , 60).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
 
                     var trofeo = game.add.image(game.width /2, game.height /2 + 150, "trofeo");
