@@ -1,7 +1,7 @@
 // Ajustes de juego  
 
 var titulo = ["TELCEL", 120];
-var subtitulo = ["Juego 2", 80];
+var subtitulo = ["Juego 3", 80];
 var intentostext = ["Oportunidades", 70];
 var metatext = ["Tiempo", 80];
 var tutorial1 = ["Presiona las pelotas", 60];
@@ -17,7 +17,7 @@ var intentos = 3;                                      // Cantidad de intentos
 var puntosmeta = 10;                                   // Puntos a conseguir 
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
 
-var turnostotales = 5;
+var turnostotales = 1;
 var ronda = 1;
 var contetoActual = 0;
 var timer;
@@ -209,9 +209,54 @@ howToPlay.prototype = {
 
 function botonazo(){
     if (puedeJugar){
+
+         cuentaClick++;
+
+     if (cuentaClick == turnostotales){
+          victorias=true;
+
+          game.state.start("GameOverScreen");
+
+          //Ganaste 
+     }
+
+          if (this.param1 != secuenciaList[cuentaClick-1]){
+               intentos -= 1;
+               secuenciaList = [];
+               game.state.start("GameOverScreen");
+          }
+
+          if (this.param1 == 0){
+               a.alpha = 1;
+               setTimeout(() => {
+                  a.alpha = 0.5;  
+               }, 500);
+          }
+          
+          
+          if (this.param1 == 1){
+               b.alpha = 1;
+               setTimeout(() => {
+                    b.alpha = 0.5;  
+                 }, 500);
+          }
+          
+          if (this.param1 == 2){
+               c.alpha = 1;
+               setTimeout(() => {
+                    c.alpha = 0.5;  
+                 }, 500);
+          }
+          
+          if (this.param1 == 3){
+               d.alpha = 1;
+               setTimeout(() => {
+                    d.alpha = 0.5;  
+                 }, 500);
+          }
+
         
-        cuentaClick++;
-        alert(cuentaClick);
+//        alert(cuentaClick);
         if (cuentaClick == (secuenciaList.length)){
             puedeJugar = false;
             cuentaClick = 0;
@@ -284,15 +329,10 @@ create: function(){
 
      },
      update: function(){
-        console.log(puedeJugar);
-
-     },
+        console.log(cuentaClick);
 
 
-
-     secuencia: function(){
      }
-
 
 
 }
@@ -319,8 +359,8 @@ gameOverScreen.prototype = {
 
 
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -20, 220 , "font", "¡FELICIDADES!" , 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -10, 300 , "font", "¡Solicita tu premio! " , 60).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
 
                     var trofeo = game.add.image(game.width /2, game.height /2 + 150, "trofeo");
@@ -421,6 +461,7 @@ gameOverScreen.prototype = {
 function preparacion(){
     var seleccion = game.rnd.between(0,3);
     secuenciaList.push(seleccion);
+    ronda = secuenciaList.length;
 
 }
 
@@ -465,7 +506,7 @@ function iluminar(){
     }
 
 
-    }, 1000);
+    }, 2000);
 
 
 }

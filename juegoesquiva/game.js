@@ -11,7 +11,7 @@ var sinintento = ["Te quedaste sin intentos =(", 60];
 var proxima = ["Mucha suerte para la proxima..", 50];
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
-var tiempojuego = 2; 
+var tiempojuego = 40; 
 var tunnelWidth = 400;                                 // Ancho del tunel de juego
 var shipHorizontalSpeed = 100;                         // Velocidad jugador de manera horizontal, mientras mas grande valor mas lento 
 var shipMoveDelay = 0;                                 // Retardo para volver a mover al jugador 
@@ -408,8 +408,8 @@ gameOverScreen.prototype = {
                // Escena ganaste
                if(savedData.victoria){
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
-                    game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -20, 220 , "font", "¡FELICIDADES!" , 70).anchor.x = 0.5;
+                    game.add.bitmapText(game.width / 2 -10, 300 , "font", "¡Solicita tu premio! " , 60).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", " " , 70).anchor.x = 0.5;
 
                     var trofeo = game.add.image(game.width /2, game.height /2 + 150, "trofeo");
