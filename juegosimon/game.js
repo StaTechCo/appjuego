@@ -1,7 +1,7 @@
 // Ajustes de juego  
 
 var titulo = ["TELCEL", 120];
-var subtitulo = ["Juego 2", 80];
+var subtitulo = ["Juego 3", 80];
 var intentostext = ["Oportunidades", 70];
 var metatext = ["Tiempo", 80];
 var tutorial1 = ["Presiona las pelotas", 60];
