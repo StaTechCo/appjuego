@@ -4,8 +4,8 @@ var titulo = ["TELCEL", 120];
 var subtitulo = ["Juego 3", 80];
 var intentostext = ["Oportunidades", 70];
 var metatext = ["Tiempo", 80];
-var tutorial1 = ["Presiona las pelotas", 60];
-var tutorial2 = ["Evita los emojis", 55];
+var tutorial1 = ["Sigue la secuencia para ganar", 50];
+var tutorial2 = ["Cada vez sera mas dificil", 50];
 var sigueintentado = ["Buen intento", 80];
 var agradece = ["Gracias por participar", 80];
 var sinintento = ["Te quedaste sin intentos =(", 60];
@@ -172,22 +172,22 @@ howToPlay.prototype = {
           var titleBG = game.add.tileSprite(0, 0, game.width, game.height, "backsplash");
           titleBG.tint = bgColors[0];
           document.body.style.background = colorbg;
-          game.add.bitmapText(game.width / 2, 100 , "font", "Consigue " + puntosmeta.toString() + " puntos en", 70).anchor.x = 0.5;
+          game.add.bitmapText(game.width / 2, 100 , "font", "Reno dice...", 70).anchor.x = 0.5;
 
           game.add.bitmapText(game.width / 2, 300 , "font", tutorial1[0], tutorial1[1]).anchor.x = 0.5;
           game.add.bitmapText(game.width / 2, 350 , "font", tutorial2[0], tutorial2[1]).anchor.x = 0.5;
           
-          var pelotatuto = game.add.sprite(game.width / 2 - 150, 500, "punto");
+          var pelotatuto = game.add.sprite(game.width / 2 - 150, 500, "reno1");
           pelotatuto.anchor.set(0.5);
           var pelotatutoTween = game.add.tween(pelotatuto).to({
-               y: game.height / 2 + 100
+               alpha: 0.5
           }, 500, "Linear", true, 0, -1); 
           pelotatutoTween.yoyo(true); 
 
-          var enojadotuto = game.add.sprite(game.width / 2 + 150, 500, "evita");
+          var enojadotuto = game.add.sprite(game.width / 2 + 150, 500, "reno2");
           enojadotuto.anchor.set(0.5);
           var enojadotutoTween = game.add.tween(enojadotuto).to({
-               y: game.height / 2 + 100
+               alpha: 0.5
           }, 500, "Linear", true, 0, -1); 
           enojadotutoTween.yoyo(true); 
 
