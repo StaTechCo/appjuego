@@ -17,9 +17,8 @@ var intentos = 3;                                      // Cantidad de intentos
 var puntosmeta = 10;                                   // Puntos a conseguir 
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
 
-var turnostotales = 1;
-var ronda = 1;
-var contetoActual = 0;
+var turnostotales = 5;
+var conteoActual = 1;
 var timer;
 var cuentaClick=0;
 
@@ -105,12 +104,14 @@ preload.prototype = {
           
           
           // Objetos personalizados de juego
-          game.load.image("punto", "assets/sprites/punto.png");
-          game.load.image("evita", "assets/sprites/evita.png");
+          game.load.image("reno1", "assets/sprites/reno1.png");
+          game.load.image("reno2", "assets/sprites/reno2.png");
 
           game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
-          game.load.audio("explosion", ["assets/sounds/explosion.mp3"]);
-          game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
+          game.load.audio("a1",    ["assets/sounds/a1.mp3"]);
+          game.load.audio("a2",    ["assets/sounds/a2.mp3"]);
+          game.load.audio("a3",    ["assets/sounds/a3.mp3"]);
+          game.load.audio("a4",    ["assets/sounds/a4.mp3"]);
 	},
   	create: function(){
 		this.game.state.start("TitleScreen");
@@ -211,22 +212,20 @@ function botonazo(){
 
          cuentaClick++;
 
-     if (cuentaClick == turnostotales){
-          victorias=true;
-
-          game.state.start("GameOverScreen");
-
-          //Ganaste 
-     }
-
           if (this.param1 != secuenciaList[cuentaClick-1]){
                intentos -= 1;
-               secuenciaList = [];
+               secuenciaList.length= [];
+               secuenciaList.length= 0;
+               cuentaClick = 0;
+               conteoActual = 1;
+               puedeJugar= false;
                game.state.start("GameOverScreen");
+               return;
           }
 
           if (this.param1 == 0){
                a.alpha = 1;
+               game.add.audio("a1").play();
                setTimeout(() => {
                   a.alpha = 0.5;  
                }, 500);
@@ -235,6 +234,7 @@ function botonazo(){
           
           if (this.param1 == 1){
                b.alpha = 1;
+               game.add.audio("a2").play();
                setTimeout(() => {
                     b.alpha = 0.5;  
                  }, 500);
@@ -242,6 +242,7 @@ function botonazo(){
           
           if (this.param1 == 2){
                c.alpha = 1;
+               game.add.audio("a3").play();
                setTimeout(() => {
                     c.alpha = 0.5;  
                  }, 500);
@@ -249,6 +250,7 @@ function botonazo(){
           
           if (this.param1 == 3){
                d.alpha = 1;
+               game.add.audio("a4").play();
                setTimeout(() => {
                     d.alpha = 0.5;  
                  }, 500);
@@ -257,10 +259,24 @@ function botonazo(){
         
 //        alert(cuentaClick);
         if (cuentaClick == (secuenciaList.length)){
-            puedeJugar = false;
-            cuentaClick = 0;
-            preparacion();
-            iluminar();
+
+
+            if (cuentaClick == turnostotales){
+               victorias=true;
+               secuenciaList.length= [];
+               secuenciaList.length= 0;
+               cuentaClick = 0;
+               conteoActual = 1;
+               puedeJugar= false;
+               game.state.start("GameOverScreen");
+               return;
+               //Ganaste 
+          }
+          puedeJugar = false;
+          cuentaClick = 0;
+          preparacion();
+          conteoActual += 1;
+          iluminar();
         }
     }
 }
@@ -286,10 +302,9 @@ create: function(){
           rightWallBG.tint = tintColor;
           rightWallBG.tileScale.x = -1;
 
-          
           preparacion();
           
-          a = game.add.image(game.width/2 - 100, game.height/2 - 100, "punto");
+          a = game.add.image(game.width/2 - 100, game.height/2 - 100, "reno1");
           a.anchor.set(0.5);
           a.alpha =0.5;
           a.inputEnabled = true;
@@ -297,34 +312,48 @@ create: function(){
         
 
           
-          b = game.add.image(game.width/2 + 100, game.height/2 - 100, "punto");
+          b = game.add.image(game.width/2 + 100, game.height/2 - 100, "reno2");
           b.anchor.set(0.5);
           b.alpha =0.5;
           b.inputEnabled = true;
           b.events.onInputDown.add(botonazo,{param1:1});
           
           
-          c = game.add.image(game.width/2 - 100, game.height/2 + 100, "punto");
+          c = game.add.image(game.width/2 - 100, game.height/2 + 100, "reno2");
           c.anchor.set(0.5);
           c.alpha =0.5;
           c.inputEnabled = true;
           c.events.onInputDown.add(botonazo,{param1:2});
           
           
-          d = game.add.image(game.width/2 + 100, game.height/2 + 100, "punto");
+          d = game.add.image(game.width/2 + 100, game.height/2 + 100, "reno1");
           d.anchor.set(0.5);
           d.alpha =0.5;
           d.inputEnabled = true;
-          d.events.onInputDown.add(botonazo,{param1:3});          
+          d.events.onInputDown.add(botonazo,{param1:3});
+
+
+          this.turno = game.add.bitmapText(game.width/2,game.height/2 -400, "font", "Hola",50);
+          this.turno.anchor.x = 0.5;  
+
+          this.puntosActuales = game.add.bitmapText(game.width/2,game.height -200, "font", conteoActual.toString() + "/" + turnostotales.toString(),150);
+          this.puntosActuales.anchor.x = 0.5;        
           
           iluminar();
 
      },
      update: function(){
-     },
+          if (puedeJugar){
+               this.turno.text= "Es tu turno";
 
+          }
+          else {
+               this.turno.text= "Turno de Simon";
+               this.puntosActuales.text = conteoActual.toString() + "/" + turnostotales.toString();
+          }
 
      }
+}
 
 
 
@@ -347,6 +376,8 @@ gameOverScreen.prototype = {
           savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
           
           if (lifes >= 1){
+
+               // ESCENA GANASTE
                if(savedData.victoria){   
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2 -20, 220 , "font", "¡FELICIDADES!" , 70).anchor.x = 0.5;
@@ -368,7 +399,15 @@ gameOverScreen.prototype = {
                     }, 2500, "Linear", true, 0, -1); 
                     tween.yoyo(true);
 
-
+                    var atrasButton = game.add.button(100, game.height -100, "atras", this.returnRegistro);
+                    atrasButton.width = "100";
+                    atrasButton.height = "100";
+                    atrasButton.anchor.set(0.5);
+                    var tween = game.add.tween(atrasButton).to({
+                         width: 90,
+                         height: 90
+                    }, 1500, "Linear", true, 0, -1); 
+                    tween.yoyo(true);
                     
                     aplausos.play();
                     this.fuegosArtificiales();
@@ -376,6 +415,8 @@ gameOverScreen.prototype = {
 
                    
                }
+
+               //ESCENA SIGUE INTENTANDO MI NIÑO!!! CONFIA EN TI MISMO <3
                else{
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 200 , "font", sigueintentado[0], sigueintentado[1]).anchor.x = 0.5;
@@ -405,13 +446,26 @@ gameOverScreen.prototype = {
                     tween.yoyo(true);
                }
           }
+
+          //TE QUIEDASTE SIN INTENTOS
           else if (lifes <= 0){
                game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 280 , "font", agradece[0], agradece[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 220 , "font", sinintento[0], sinintento[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", proxima[0], proxima[1]).anchor.x = 0.5;
 
+               var atrasButton = game.add.button(game.width/2, game.height -100, "atras", this.returnRegistro);
+               atrasButton.width = "100";
+               atrasButton.height = "100";
+               atrasButton.anchor.set(0.5);
+               var tween = game.add.tween(atrasButton).to({
+                    width: 200,
+                    height:200
+               }, 1500, "Linear", true, 0, -1); 
+               tween.yoyo(true);
           }
+
+          
      },
 
      startGame: function(){
@@ -421,6 +475,10 @@ gameOverScreen.prototype = {
      returnMenu: function(){
           game.sound.stopAll();
           window.location.href = '../menu';
+     },
+     returnRegistro: function(){
+          game.sound.stopAll();
+          window.location.href = '../';
      },
      
      fuegosArtificiales: function(){
@@ -451,7 +509,7 @@ gameOverScreen.prototype = {
 function preparacion(){
     var seleccion = game.rnd.between(0,3);
     secuenciaList.push(seleccion);
-    ronda = secuenciaList.length;
+    console.log(secuenciaList);
 
 }
 
@@ -463,35 +521,72 @@ function iluminar(){
 
 
         for (i in secuenciaList ){
-            var tiempo1 = i * 2000
-		  var tiempo2 = tiempo1 + 1000; 
+            var tiempo1 = i * 1000
+		  var tiempo2 = tiempo1 + 500; 
             algo = secuenciaList[i];
+
         if (algo == 0){
-               setTimeout(function() {a.alpha = 1},tiempo1);
-			setTimeout(function() {a.alpha = 0.5},tiempo2);
+               setTimeout(function() {game.add.tween(a).to({
+                    alpha:1,
+                    height:170,
+                    width:170
+               }, 500, Phaser.Easing.Linear.None, true);
+               game.add.audio("a1").play();},tiempo1);
+			setTimeout(function() {game.add.tween(a).to({
+                    alpha:0.5,
+                    width:150,
+                    height:150
+               }, 250, Phaser.Easing.Linear.None, true);},tiempo2);
         }
-
         if (algo == 1){
-            setTimeout(function() {b.alpha = 1},tiempo1);
-			setTimeout(function() {b.alpha = 0.5},tiempo2);
-        }
 
+               setTimeout(function() {game.add.tween(b).to({
+                    alpha:1,
+                    width:170,
+                    height:170
+               }, 500, Phaser.Easing.Linear.None, true);
+               game.add.audio("a2").play();},tiempo1);
+               setTimeout(function() {game.add.tween(b).to({
+                    alpha:0.5,
+                    width:150,
+                    height:150
+               }, 250, Phaser.Easing.Linear.None, true);},tiempo2);
+        }
         if (algo == 2){
-            setTimeout(function() {c.alpha = 1},tiempo1);
-			setTimeout(function() {c.alpha = 0.5},tiempo2);
-        }
 
+               setTimeout(function() {game.add.tween(c).to({
+                    alpha:1,
+                    width:170,
+                    height:170
+               }, 500, Phaser.Easing.Linear.None, true);
+               game.add.audio("a3").play();},tiempo1);
+               setTimeout(function() {game.add.tween(c).to({
+                    alpha:0.5,
+                    width:150,
+                    height:150
+               }, 250, Phaser.Easing.Linear.None, true);},tiempo2);
+        }
         if (algo == 3){
-            setTimeout(function() {d.alpha = 1},tiempo1);
-			setTimeout(function() {d.alpha = 0.5},tiempo2);
+
+               setTimeout(function() {game.add.tween(d).to({
+                    alpha:1,
+                    width:170,
+                    height:170
+               }, 500, Phaser.Easing.Linear.None, true);
+               game.add.audio("a4").play();},tiempo1);
+               setTimeout(function() {game.add.tween(d).to({
+                    alpha:0.5,
+                    width:150,
+                    height:150
+               }, 250, Phaser.Easing.Linear.None, true);},tiempo2);
         }
 
         
-        setTimeout(function() {puedeJugar=true},((secuenciaList.length-1)* 2000)+1000);
+        setTimeout(function() {puedeJugar=true},((secuenciaList.length-1)* 1000)+500);
     }
 
 
-    }, 2000);
+    }, 1000);
 
 
 }

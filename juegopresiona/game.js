@@ -4,12 +4,14 @@ var titulo = ["TELCEL", 120];
 var subtitulo = ["Juego 2", 80];
 var intentostext = ["Oportunidades", 70];
 var metatext = ["Tiempo", 80];
+
 var tutorial1 = ["Presiona las pelotas", 60];
 var tutorial2 = ["Evita los emojis", 55];
+
 var sigueintentado = ["Buen intento", 80];
-var agradece = ["Gracias por participar", 80];
-var sinintento = ["Te quedaste sin intentos =(", 60];
-var proxima = ["Mucha suerte para la proxima..", 50];
+var agradece = ["Gracias por participar", 72];
+var sinintento = ["Te quedaste sin intentos =(", 55];
+var proxima = ["Mucha suerte para la proxima..", 45];
 
 
 var colorbackground = "003F84";                        // Color de fondo laterales hexadecimal
@@ -281,6 +283,8 @@ gameOverScreen.prototype = {
           savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
           
           if (lifes >= 1){
+
+               //ESCENA GANASTE 
                if(savedData.victoria){   
 
 
@@ -321,6 +325,7 @@ gameOverScreen.prototype = {
 
                    
                }
+               //SIGUE INTENTANDO!!! ANIMO TU PUEDES!!! TE AMO BB!!!
                else{
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 200 , "font", sigueintentado[0], sigueintentado[1]).anchor.x = 0.5;
@@ -350,12 +355,24 @@ gameOverScreen.prototype = {
                     tween.yoyo(true);
                }
           }
+
+          //TE QUEDASTE SIN INTENTOS
           else if (lifes <= 0){
                game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 280 , "font", agradece[0], agradece[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 220 , "font", sinintento[0], sinintento[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", proxima[0], proxima[1]).anchor.x = 0.5;
 
+                              
+               var atrasButton = game.add.button(game.width/2, game.height -100, "atras", this.returnRegistro);
+               atrasButton.width = "100";
+               atrasButton.height = "100";
+               atrasButton.anchor.set(0.5);
+               var tween = game.add.tween(atrasButton).to({
+                    width: 200,
+                    height:200
+               }, 1500, "Linear", true, 0, -1); 
+               tween.yoyo(true);
           }
      },
 

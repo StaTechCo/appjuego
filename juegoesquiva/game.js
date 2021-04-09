@@ -3,12 +3,17 @@ var titulo = ["TELCEL", 120];
 var subtitulo = ["Juego 1", 80];
 var intentostext = ["Oportunidades", 70];
 var metatext = ["Sobrevive", 80];
-var tutorial1 = ["Presiona la pantalla o da click", 60];
-var tutorial2 = ["para moverte izquierda/derecha", 55];
+
+var tutorial1 = ["Presiona la pantalla o da click", 45];
+var tutorial2 = ["para moverte izquierda/derecha", 40];
+
 var sigueintentado = ["Buen intento", 80];
-var agradece = ["Gracias por participar", 80];
-var sinintento = ["Te quedaste sin intentos =(", 60];
-var proxima = ["Mucha suerte para la proxima..", 50];
+var agradece = ["Gracias por participar", 72];
+var sinintento = ["Te quedaste sin intentos =(", 55];
+var proxima = ["Mucha suerte para la proxima..", 45];
+
+
+
 var colorbackground = "003F84"; // Color de fondo laterales hexadecimal
 var intentos = 3;
 var tiempojuego = 40; 
@@ -439,7 +444,7 @@ gameOverScreen.prototype = {
                     atrasButton.anchor.set(0.5);
                     var tween = game.add.tween(atrasButton).to({
                          width: 90,
-                         height:90
+                         height: 90
                     }, 1500, "Linear", true, 0, -1); 
                     tween.yoyo(true);
                }
@@ -480,6 +485,17 @@ gameOverScreen.prototype = {
                game.add.bitmapText(game.width / 2, 280 , "font", agradece[0],agradece[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, 220 , "font", sinintento[0], sinintento[1]).anchor.x = 0.5;
                game.add.bitmapText(game.width / 2, game.height/2 +150 , "font", proxima[0], proxima[1] ).anchor.x = 0.5;   
+
+               
+               var atrasButton = game.add.button(game.width/2, game.height -100, "atras", this.returnRegistro);
+               atrasButton.width = "100";
+               atrasButton.height = "100";
+               atrasButton.anchor.set(0.5);
+               var tween = game.add.tween(atrasButton).to({
+                    width: 200,
+                    height:200
+               }, 1500, "Linear", true, 0, -1); 
+               tween.yoyo(true);
           }
      },
 
