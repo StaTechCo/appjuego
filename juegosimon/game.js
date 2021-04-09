@@ -17,7 +17,16 @@ var intentos = 3;                                      // Cantidad de intentos
 var puntosmeta = 10;                                   // Puntos a conseguir 
 var tunnelWidth = 450;                                 // Ancho del tunel de juego
 
+var turnostotales = 5;
+var ronda = 1;
+var contetoActual = 0;
+var timer;
+var cuentaClick=0;
 
+
+var puedeJugar = false;
+var secuenciaList = [];
+var seleccionados = 0;
 
 var victorias = false;
 var puntos;
@@ -196,15 +205,29 @@ howToPlay.prototype = {
      }
 }
 
+
+
+function botonazo(){
+    if (puedeJugar){
+        
+        cuentaClick++;
+        alert(cuentaClick);
+        if (cuentaClick == (secuenciaList.length)){
+            puedeJugar = false;
+            cuentaClick = 0;
+            preparacion();
+            iluminar();
+        }
+    }
+}
+
 var playGame = function(game){};
 playGame.prototype = {  
-     create: function(){
+create: function(){
 
-          this.bgMusic = game.add.audio("bgmusic");
-          this.bgMusic.loopFull(1);
+    //     this.bgMusic = game.add.audio("bgmusic");
+    //     this.bgMusic.loopFull(1);
 
-
-          puntos = 0;
           savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
 
           var tintColor = bgColors[0];
@@ -212,39 +235,66 @@ playGame.prototype = {
           var fondo = game.add.image(0, 0, "bg1");
           fondo.height = game.height;
           
-          this.barrierGroup = game.add.group(); 
-          this.addBarrier(this.barrierGroup, tintColor);
-
           var leftWallBG = game.add.tileSprite(- tunnelWidth / 2, 0, game.width / 2, game.height, "paredes");
           leftWallBG.tint = tintColor;
           var rightWallBG = game.add.tileSprite((game.width + tunnelWidth) / 2, 0, game.width / 2, game.height, "paredes");
           rightWallBG.tint = tintColor;
           rightWallBG.tileScale.x = -1;
 
-          this.puntosActuales = game.add.bitmapText(game.width/2,game.height -200, "font", puntos.toString() + "/" + puntosmeta.toString(),150);
-          this.puntosActuales.anchor.x = 0.5;
 
           
+          
+          preparacion();
+
+
+
+          
+          a = game.add.image(game.width/2 - 100, game.height/2 - 100, "punto");
+          a.anchor.set(0.5);
+          a.alpha =0.5;
+          a.inputEnabled = true;
+          a.events.onInputDown.add(botonazo,{param1:0});
+          
+          
+          b = game.add.image(game.width/2 + 100, game.height/2 - 100, "punto");
+          b.anchor.set(0.5);
+          b.alpha =0.5;
+          b.inputEnabled = true;
+          b.events.onInputDown.add(botonazo,{param1:1});
+          
+          
+          c = game.add.image(game.width/2 - 100, game.height/2 + 100, "punto");
+          c.anchor.set(0.5);
+          c.alpha =0.5;
+          c.inputEnabled = true;
+          c.events.onInputDown.add(botonazo,{param1:2});
+          
+          
+          d = game.add.image(game.width/2 + 100, game.height/2 + 100, "punto");
+          d.anchor.set(0.5);
+          d.alpha =0.5;
+          d.inputEnabled = true;
+          d.events.onInputDown.add(botonazo,{param1:3});
+
+
+          
+          
+          
+          iluminar();
+
      },
      update: function(){
-          gameTimer = gameTimer + 1;
-          this.puntosActuales.text = puntos.toString() + "/" + puntosmeta.toString();
-          if (puntos < puntosmeta){
-               intentos -= 1;
-               this.bgMusic.stop();
-               game.state.start("GameOverScreen");
-          }
-          if ( puntos >= puntosmeta){
-               victorias=true;
-               this.bgMusic.stop();
-               game.state.start("GameOverScreen");
-          }
+        console.log(puedeJugar);
+
      },
-     addBarrier: function(group, tintColor){              
-          var barrier = new Barrier(game, game.rnd.between(vmin,vmax));
-          game.add.existing(barrier);
-          group.add(barrier); 
-     }  
+
+
+
+     secuencia: function(){
+     }
+
+
+
 }
 
 var gameOverScreen = function(game){};
@@ -364,59 +414,60 @@ gameOverScreen.prototype = {
 
           explosionEmitter.start(true, 3200, null, 100);
 
-
-
      }
 }
 
-function botonazo(){
-     if (this.tipoboton == 0){
-          puntos += 1;
-          var winsound = game.add.audio("winpunto");
-          winsound.play();
-     }
-     
-     else {
-          puntos-=1;
-          var explosionSound = game.add.audio("explosion");
-          explosionSound.play();
-     }
-     this.destroy();
+
+function preparacion(){
+    var seleccion = game.rnd.between(0,3);
+    secuenciaList.push(seleccion);
+
+}
+
+function iluminar(){
+
+
+    setTimeout(function(){
+
+
+
+        for (i in secuenciaList ){
+
+
+            var tiempo1 = i * 2000
+			var tiempo2 = tiempo1 + 1000; 
+            algo = secuenciaList[i];
+
+        
+        if (algo == 0){
+            setTimeout(function() {a.alpha = 1},tiempo1);
+			setTimeout(function() {a.alpha = 0.5},tiempo2);
+        }
+
+        if (algo == 1){
+            setTimeout(function() {b.alpha = 1},tiempo1);
+			setTimeout(function() {b.alpha = 0.5},tiempo2);
+        }
+
+        if (algo == 2){
+            setTimeout(function() {c.alpha = 1},tiempo1);
+			setTimeout(function() {c.alpha = 0.5},tiempo2);
+        }
+
+        if (algo == 3){
+            setTimeout(function() {d.alpha = 1},tiempo1);
+			setTimeout(function() {d.alpha = 0.5},tiempo2);
+        }
+
+        
+        setTimeout(function() {puedeJugar=true},((secuenciaList.length-1)* 2000)+1000);
+
+    }
+
+
+    }, 1000);
+
 
 }
 
 
-Barrier = function (game, speed) {
-     position = game.rnd.between((game.width - tunnelWidth) / 2 + 50, (game.width + tunnelWidth) / 2 - 50);
-     boton = ["punto","evita"];
-     botonaleatorio = game.rnd.between(0,1);
-
-
-	Phaser.Sprite.call(this, game, position, -100, boton[botonaleatorio]);
-	game.physics.enable(this, Phaser.Physics.ARCADE);
-
-     this.tipoboton = botonaleatorio;
-
-     this.anchor.set(0.5);
-     this.width = game.rnd.between(150,300);
-     this.height = this.width;
-     this.body.immovable = true;
-     this.body.velocity.y = speed;
-     this.placeBarrier = true;
-     this.inputEnabled = true;
-     this.events.onInputDown.add(botonazo,this);
-};
-
-
-Barrier.prototype = Object.create(Phaser.Sprite.prototype);
-Barrier.prototype.constructor = Barrier;
-
-Barrier.prototype.update = function(){
-     if(this.placeBarrier && this.y > game.rnd.between(50,100)){
-          this.placeBarrier = false;
-          playGame.prototype.addBarrier(this.parent, this.levelTint);
-     }   
-     if(this.y > game.height){
-          this.destroy();
-     }
-}

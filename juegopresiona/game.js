@@ -104,6 +104,8 @@ preload.prototype = {
           game.load.image("punto", "assets/sprites/punto.png");
           game.load.image("evita", "assets/sprites/evita.png");
 
+          game.load.spritesheet('item', 'assets/sprites/', 160, 160);
+
           game.load.audio("bgmusic", ["assets/sounds/bgmusic.mp3"]);   
           game.load.audio("explosion", ["assets/sounds/explosion.mp3"]);
           game.load.audio("winpunto", ["assets/sounds/winpunto.mp3"]);
@@ -307,6 +309,15 @@ gameOverScreen.prototype = {
                     aplausos.play();
                     this.fuegosArtificiales();
                     game.time.events.loop(1000, this.fuegosArtificiales, this);
+                    var atrasButton = game.add.button(100, game.height -100, "atras", this.returnRegistro);
+                    atrasButton.width = "100";
+                    atrasButton.height = "100";
+                    atrasButton.anchor.set(0.5);
+                    var tween = game.add.tween(atrasButton).to({
+                         width: 90,
+                         height:90
+                    }, 1500, "Linear", true, 0, -1); 
+                    tween.yoyo(true);
 
                    
                }
@@ -355,6 +366,10 @@ gameOverScreen.prototype = {
      returnMenu: function(){
           game.sound.stopAll();
           window.location.href = '../menu';
+     },
+     returnRegistro: function(){
+          game.sound.stopAll();
+          window.location.href = '../';
      },
      
      fuegosArtificiales: function(){
