@@ -87,7 +87,6 @@ preload.prototype = {
           var loadingBar = this.add.sprite(game.width / 2, game.height / 2, "loading");
           loadingBar.anchor.setTo(0.5);
           game.load.setPreloadSprite(loadingBar);
-
           // Objetos comunes 
           game.load.image("playbutton1", "../common/sprites/playbutton.png");
           game.load.image("backsplash", "../common/sprites/backsplash.png");
@@ -210,8 +209,20 @@ howToPlay.prototype = {
 function botonazo(){
     if (puedeJugar){
         
-        cuentaClick++;
-        alert(cuentaClick);
+          cuentaClick++;
+          var tiempo1 = cuentaClick * 2000
+          var tiempo2 = tiempo1 + 1000; 
+
+          if (algo == 0){
+               setTimeout(function() {a.alpha = 1},tiempo1);
+			setTimeout(function() {a.alpha = 0.5},tiempo2);
+        }
+
+     
+        if(this.param1 != secuenciaList[cuentaClick-1]){
+              intentos = intentos-1;
+              game.state.start("GameOverScreen");
+        }
         if (cuentaClick == (secuenciaList.length)){
             puedeJugar = false;
             cuentaClick = 0;
@@ -220,6 +231,7 @@ function botonazo(){
         }
     }
 }
+
 
 var playGame = function(game){};
 playGame.prototype = {  
@@ -241,20 +253,16 @@ create: function(){
           rightWallBG.tint = tintColor;
           rightWallBG.tileScale.x = -1;
 
-
-          
           
           preparacion();
-
-
-
           
           a = game.add.image(game.width/2 - 100, game.height/2 - 100, "punto");
           a.anchor.set(0.5);
           a.alpha =0.5;
           a.inputEnabled = true;
           a.events.onInputDown.add(botonazo,{param1:0});
-          
+        
+
           
           b = game.add.image(game.width/2 + 100, game.height/2 - 100, "punto");
           b.anchor.set(0.5);
@@ -274,18 +282,12 @@ create: function(){
           d.anchor.set(0.5);
           d.alpha =0.5;
           d.inputEnabled = true;
-          d.events.onInputDown.add(botonazo,{param1:3});
-
-
-          
-          
+          d.events.onInputDown.add(botonazo,{param1:3});          
           
           iluminar();
 
      },
      update: function(){
-        console.log(puedeJugar);
-
      },
 
 
@@ -316,8 +318,6 @@ gameOverScreen.prototype = {
           
           if (lifes >= 1){
                if(savedData.victoria){   
-
-
                     game.add.bitmapText(game.width / 2, 100 , "font", titulo[0], titulo[1]).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 220 , "font", "FELICIDADES!!! " , 70).anchor.x = 0.5;
                     game.add.bitmapText(game.width / 2, 300 , "font", "Reclama tu premio!!! " , 60).anchor.x = 0.5;
@@ -432,15 +432,11 @@ function iluminar(){
 
 
         for (i in secuenciaList ){
-
-
             var tiempo1 = i * 2000
-			var tiempo2 = tiempo1 + 1000; 
+		  var tiempo2 = tiempo1 + 1000; 
             algo = secuenciaList[i];
-
-        
         if (algo == 0){
-            setTimeout(function() {a.alpha = 1},tiempo1);
+               setTimeout(function() {a.alpha = 1},tiempo1);
 			setTimeout(function() {a.alpha = 0.5},tiempo2);
         }
 
@@ -461,10 +457,7 @@ function iluminar(){
 
         
         setTimeout(function() {puedeJugar=true},((secuenciaList.length-1)* 2000)+1000);
-
     }
-
-
     }, 1000);
 
 
