@@ -286,9 +286,6 @@ var playGame = function(game){};
 playGame.prototype = {  
 create: function(){
 
-    //     this.bgMusic = game.add.audio("bgmusic");
-    //     this.bgMusic.loopFull(1);
-
           savedData = localStorage.getItem(localStorageName)==null?{registro: false,vidas:0, victoria:false}:JSON.parse(localStorage.getItem(localStorageName));
 
           var tintColor = bgColors[0];
@@ -348,7 +345,7 @@ create: function(){
 
           }
           else {
-               this.turno.text= "Turno de Simon";
+               this.turno.text= "Turno de Reno";
                this.puntosActuales.text = conteoActual.toString() + "/" + turnostotales.toString();
           }
 
